@@ -12,7 +12,7 @@ export { Spinner } from './Spinner';
 export { Textarea } from './Textarea';
 export type { TextareaProps } from './Textarea';
 
-export { Card } from './Card';
+export { Card } from './Card/ui/Card';
 
 export { Price } from './Card/Price/ui/Price';
 

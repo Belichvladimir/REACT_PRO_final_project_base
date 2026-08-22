@@ -1,3 +1,4 @@
+import { Input } from '../../../../shared/ui';
 import { useCount } from '../hooks/useCount';
 import s from './CartCounter.module.css';
 import classNames from 'classnames';
@@ -17,7 +18,7 @@ export const CartCounter = ({ productId }: TCartCounter) => {
 					className={classNames(s['button-count__minus'])}>
 					-
 				</button>
-				<input
+				<Input
 					onChange={handleSetCount}
 					type='number'
 					className={classNames(s['button-count__num'])}

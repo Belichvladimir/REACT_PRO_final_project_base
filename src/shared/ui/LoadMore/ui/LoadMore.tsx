@@ -1,10 +1,34 @@
 import { Alert, CircularProgress, Stack } from '@mui/material';
-import { useRef } from 'react';
-import { useLoadMore } from '../hooks/useLoadMore';
+import { useEffect, useRef } from 'react';
 
-export const LoadMore = () => {
+type LoadMoreProps = {
+	isFetching: boolean;
+	isEndOfList: boolean;
+	onLoadMore: () => void;
+};
+
+export const LoadMore = ({
+	isFetching,
+	isEndOfList,
+	onLoadMore,
+}: LoadMoreProps) => {
 	const ref = useRef<HTMLDivElement>(null);
-	const { isEndOfList, isFetching } = useLoadMore({ ref });
+
+	useEffect(() => {
+		let observer: IntersectionObserver | undefined;
+		if (ref.current && !isEndOfList) {
+			observer = new IntersectionObserver(
+				(entries) => {
+					if (entries[0].isIntersecting) {
+						onLoadMore();
+					}
+				},
+				{ threshold: 0.5 }
+			);
+			observer.observe(ref.current);
+		}
+		return () => observer?.disconnect();
+	}, [onLoadMore, isEndOfList]);
 
 	return (
 		<Stack

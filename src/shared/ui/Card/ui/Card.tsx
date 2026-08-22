@@ -3,20 +3,16 @@ import s from './Card.module.css';
 import { Price } from '../Price/ui/Price';
 import { Link } from 'react-router-dom';
 import { LikeButton } from '../../LikeButton';
-import { useAppSelector } from '../../../store/utils';
-import { cartSelectors } from '../../../store/slices/cart';
-import { useAddToCart } from '../../../hooks/useAddToCart';
 import { Button } from '../../Button';
 import { CartCounter } from '../../../../features/cart/CartCounter';
 
 type CardProps = {
 	product: Product;
+	isProductInCart: boolean;
+	onAddToCart: (cartProduct: CartProduct) => void;
 };
-export const Card = ({ product }: CardProps) => {
+export const Card = ({ product, isProductInCart, onAddToCart }: CardProps) => {
 	const { discount, price, name, tags, id, images } = product;
-	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
-	const isProductInCart = cartProducts.some((p) => p.id === id);
-	const { addProductToCart } = useAddToCart();
 
 	return (
 		<article className={s['card']}>
@@ -56,7 +52,7 @@ export const Card = ({ product }: CardProps) => {
 				<CartCounter productId={id} />
 			) : (
 				<Button
-					onClick={() => addProductToCart({ ...product, count: 1 })}
+					onClick={() => onAddToCart({ ...product, count: 1 })}
 					disabled={isProductInCart}
 					variant='primary'
 					className={classNames(

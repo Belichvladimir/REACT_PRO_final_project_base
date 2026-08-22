@@ -2,6 +2,7 @@ import s from './ProductCartCounter.module.css';
 import classNames from 'classnames';
 import { useCount } from '../hooks/useCount';
 import { useAddToCart } from '../../../../shared/hooks/useAddToCart';
+import { Input } from '../../../../shared/ui';
 
 type ProductCartCounterProps = {
 	product: Product;
@@ -16,7 +17,7 @@ export const ProductCartCounter = ({ product }: ProductCartCounterProps) => {
 				<button className={s['button-count__minus']} onClick={handleCountMinus}>
 					-
 				</button>
-				<input
+				<Input
 					type='number'
 					className={s['button-count__num']}
 					value={count}

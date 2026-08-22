@@ -1,4 +1,8 @@
-import { Card } from '../../../shared/ui/Card';
+import React from 'react';
+import { useAddToCart } from '../../../shared/hooks/useAddToCart';
+import { cartSelectors } from '../../../shared/store/slices/cart';
+import { useAppSelector } from '../../../shared/store/utils';
+import { Card } from '../../../shared/ui/Card/ui/Card';
 import s from './CardList.module.css';
 
 type CardListProps = {
@@ -6,6 +10,11 @@ type CardListProps = {
 	products: Product[];
 };
 export const CardList = ({ title, products }: CardListProps) => {
+	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
+	const { addProductToCart } = useAddToCart();
+
+	const isProductInCart = (id: string) => cartProducts.some((p) => p.id === id);
+
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
 	}
@@ -17,7 +26,12 @@ export const CardList = ({ title, products }: CardListProps) => {
 			</div>
 			<div className={s['card-list__items']}>
 				{products.map((product) => (
-					<Card key={product.id} product={product} />
+					<Card
+						key={product.id}
+						product={product}
+						isProductInCart={isProductInCart(product.id)}
+						onAddToCart={addProductToCart}
+					/>
 				))}
 			</div>
 		</div>
