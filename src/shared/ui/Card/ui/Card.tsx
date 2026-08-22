@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import s from './Card.module.css';
-import { Price } from './Price/ui/Price';
+import { Price } from '../Price/ui/Price';
 import { Link } from 'react-router-dom';
 import { LikeButton } from '../../LikeButton';
 import { useAppSelector } from '../../../store/utils';
 import { cartSelectors } from '../../../store/slices/cart';
 import { useAddToCart } from '../../../hooks/useAddToCart';
-import { CartCounter } from '../../CartCounter';
 import { Button } from '../../Button';
+import { CartCounter } from '../../../../features/cart/CartCounter';
 
 type CardProps = {
 	product: Product;

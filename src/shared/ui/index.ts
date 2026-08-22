@@ -14,11 +14,7 @@ export type { TextareaProps } from './Textarea';
 
 export { Card } from './Card';
 
-export { Price } from './Card/ui/Price/ui/Price';
-
-export { CartCounter } from './CartCounter';
-
-export { ProductCartCounter } from './ProductCartCounter';
+export { Price } from './Card/Price/ui/Price';
 
 export { Rating } from './Rating';
 
@@ -30,6 +26,3 @@ export { Logo } from './Logo';
 
 export { LoadMore } from './LoadMore';
 
-export { Sort } from './Sort';
-
-export { Search } from './Search/ui/Search';

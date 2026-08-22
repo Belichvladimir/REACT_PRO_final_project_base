@@ -9,10 +9,10 @@ import { LikeButton } from '../../../shared/ui/LikeButton';
 import { ReviewList } from '../../../widgets/ReviewList/ui/ReviewList';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { useGetProductQuery } from '../../../shared/store/api/productsApi';
-import { ProductCartCounter } from '../../../shared/ui/ProductCartCounter/ui/ProductCartCounter';
 import { useAppSelector } from '../../../shared/store/utils';
 import { cartSelectors } from '../../../shared/store/slices/cart';
-import { CartCounter } from '../../../shared/ui/CartCounter';
+import { CartCounter } from '../../../features/cart/CartCounter';
+import { ProductCartCounter } from '../../../features/cart/ProductCartCounter';
 
 export const ProductPage = WithProtection(() => {
 	const location = useLocation();
