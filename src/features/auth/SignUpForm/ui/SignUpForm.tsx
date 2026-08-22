@@ -1,13 +1,6 @@
 import { FC } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {
-	Avatar,
-	Box,
-	Container,
-	Link,
-	Typography,
-} from '@mui/material';
+import { Avatar, Box, Container, Link, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -18,9 +11,10 @@ import { useSignUpMutation } from '../../model/api/authApi';
 import { userActions } from '../../../../shared/store/slices/user';
 import { Button, Input } from '../../../../shared/ui';
 import { getMessageFromError } from '../../../../shared/utils';
+import { useAppDispatch } from '../../../../shared/store/utils';
 
 export const SignUpForm: FC = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [signUpRequestFn] = useSignUpMutation();
 	const {

@@ -2,16 +2,16 @@ import { ReactComponent as TrashIcon } from '../../../../shared/assets/icons/tra
 import { Link } from 'react-router-dom';
 import s from './CartItem.module.css';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
 import { cartActions } from '../../../../shared/store/slices/cart';
 import { Button } from '../../../../shared/ui';
 import { CartCounter } from '../../CartCounter';
+import { useAppDispatch } from '../../../../shared/store/utils';
 
 type CartItemProps = {
 	product: CartProduct;
 };
 export const CartItem = ({ product }: CartItemProps) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { id, name, images, price, discount } = product;
 
 	const handleDelete = () => {

@@ -25,4 +25,3 @@ export { ButtonBack } from './ButtonBack';
 export { Logo } from './Logo';
 
 export { LoadMore } from './LoadMore';
-

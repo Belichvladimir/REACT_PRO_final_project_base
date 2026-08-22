@@ -1,10 +1,10 @@
+import { cartSelectors } from '../../../../shared/store/slices/cart';
+import { useAppSelector } from '../../../../shared/store/utils';
 import s from './CartAmount.module.css';
 import classNames from 'classnames';
 
-type CartAmountProps = {
-	products: CartProduct[];
-};
-export const CartAmount = ({ products }: CartAmountProps) => {
+export const CartAmount = () => {
+	const products = useAppSelector(cartSelectors.getCartProducts);
 	const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
 	const allDiscount = products.reduce(
 		(acc, p) => p.discount * p.count + acc,

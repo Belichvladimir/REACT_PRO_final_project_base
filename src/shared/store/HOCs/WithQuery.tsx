@@ -16,8 +16,7 @@ export const WithQuery = <T extends object>(
 	WrappedComponent: ComponentType<T>
 ) => {
 	const ReturnedComponent: FC<WithQueryProps & T> = (props) => {
-		const { isError, isLoading, refetch, error, ...propsForWrappedComponent } =
-			props;
+		const { isError, isLoading, error, ...propsForWrappedComponent } = props;
 
 		if (isError) {
 			return (

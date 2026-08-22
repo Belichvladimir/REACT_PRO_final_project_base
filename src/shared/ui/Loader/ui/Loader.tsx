@@ -3,20 +3,22 @@ import s from './Loader.module.css';
 import classNames from 'classnames';
 
 export interface LoaderProps {
-  size?: 'sm' | 'md' | 'lg';
-  fullScreen?: boolean;
+	size?: 'sm' | 'md' | 'lg';
+	fullScreen?: boolean;
 }
 
-export const Loader: FC<LoaderProps> = ({ size = 'md', fullScreen = false }) => {
-  return (
-    <div
-      className={classNames(
-        s['loader'],
-        s[`loader_${size}`],
-        fullScreen && s['loader_fullscreen']
-      )}
-    >
-      <div className={s['loader__spinner']} />
-    </div>
-  );
+export const Loader: FC<LoaderProps> = ({
+	size = 'md',
+	fullScreen = false,
+}) => {
+	return (
+		<div
+			className={classNames(
+				s['loader'],
+				s[`loader_${size}`],
+				fullScreen && s['loader_fullscreen']
+			)}>
+			<div className={s['loader__spinner']} />
+		</div>
+	);
 };
