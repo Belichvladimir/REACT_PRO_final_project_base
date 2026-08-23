@@ -4,13 +4,38 @@ import { ButtonBack } from '../../../shared/ui/ButtonBack';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { Input } from '../../../shared/ui/Input';
 import { Button } from '../../../shared/ui/Button';
+import { useActionState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+interface IRes {
+    ok?: boolean;
+}
+
 
 export const ProfilePage = WithProtection(() => {
+	const [status, submit, isPending] = useActionState(async () => {
+    
+    const res:IRes = await new Promise(resolve => setTimeout(() => resolve({ ok:true }), 1000));
+``
+    return res.ok ? "success" : "error";
+
+    }, "idle");
+
+	useEffect(() => {
+		if (status ===  "success") {
+			toast.success('Вы успешно обновили свои данные!');
+		}
+		if (status ===  "error") {
+			toast.error('При обновлении данных произошла ошибка!');
+		}
+	}, [status])
+
+
 	return (
 		<>
 			<ButtonBack />
 			<h1 className={s['form__title']}>Мои данные</h1>
-			<form className={classNames(s['form'], s['form'])}>
+			<form className={classNames(s['form'], s['form'])} action={submit}>
 				<div className={s['form__row']}>
 					<Input
 						name='name'
@@ -46,12 +71,13 @@ export const ProfilePage = WithProtection(() => {
 
 				<Button
 					type='submit'
+					disabled={isPending}
 					className={classNames(
 						s['form__btn'],
 						s['secondary'],
 						s['maxContent']
 					)}>
-					Сохранить
+					{isPending ? 'Сохранение' : 'Сохранить'}
 				</Button>
 			</form>
 			<h2 className={s['form__title']}>Изменить пароль</h2>
@@ -78,3 +104,4 @@ export const ProfilePage = WithProtection(() => {
 		</>
 	);
 });
+

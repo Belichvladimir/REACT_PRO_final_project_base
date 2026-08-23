@@ -19,15 +19,13 @@ export const ProductPage = WithProtection(() => {
 	const location = useLocation();
 	const { pathname } = location;
 	const productId = pathname.split('/').at(-1) || '';
-
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
-
 	const { data: product } = useGetProductQuery({ id: productId });
+	const { isLike, onToggleLike } = useProductLike(product);
 
 	if (!product) {
 		return <></>;
 	}
-	const { isLike, onToggleLike } = useProductLike(product);
 	const { id, name, images, description, price, discount } = product;
 
 	const isProductInCart = !!cartProducts.find((p) => p.id === id);

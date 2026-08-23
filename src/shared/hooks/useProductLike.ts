@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useOptimistic, startTransition } from 'react';
 import {
 	IErrorResponse,
 	useDeleteLikeProductMutation,
@@ -8,32 +8,38 @@ import { userSelectors } from '../store/slices/user';
 import { useAppSelector } from '../store/utils';
 import { toast } from 'react-toastify';
 
-export const useProductLike = (product: Product) => {
+export const useProductLike = (product?: Product) => {
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 	const user = useAppSelector(userSelectors.getUser);
+	const isLikedOnServer = product?.likes.some((l) => l.userId === user?.id) || false;
+	const [optimisticLike, addOptimistic] = useOptimistic(
+    isLikedOnServer,
+    (_, next: boolean) => next
+  	);
 
 	const [setLike] = useSetLikeProductMutation();
 	const [deleteLike] = useDeleteLikeProductMutation();
-
-	const isLike = product?.likes.some((l) => l.userId === user?.id);
 
 	const onToggleLike = useCallback(async () => {
 		if (!accessToken) {
 			toast.warning('Вы не авторизованы');
 			return;
 		}
+		const nextValue = !optimisticLike;
 		let response;
-		if (isLike) {
-			response = await deleteLike({ id: `${product.id}` });
+		addOptimistic(nextValue);
+		if (optimisticLike) {
+			response = await deleteLike({ id: `${product?.id}` });
 		} else {
-			response = await setLike({ id: `${product.id}` });
+			response = await setLike({ id: `${product?.id}` });
 		}
-
-		if (response.error) {
+		if (response?.error) {
+			addOptimistic(!nextValue);
 			const error = response.error as IErrorResponse;
 			toast.error(error.data.message);
 		}
-	}, [accessToken, isLike, product.id, setLike, deleteLike]);
 
-	return { onToggleLike, isLike };
+	}, [accessToken, optimisticLike, product?.id, setLike, deleteLike]);
+
+	return { onToggleLike, isLike: optimisticLike };
 };
