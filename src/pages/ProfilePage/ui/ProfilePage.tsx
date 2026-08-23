@@ -8,28 +8,25 @@ import { useActionState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 interface IRes {
-    ok?: boolean;
+	ok?: boolean;
 }
-
 
 export const ProfilePage = WithProtection(() => {
 	const [status, submit, isPending] = useActionState(async () => {
-    
-    const res:IRes = await new Promise(resolve => setTimeout(() => resolve({ ok:true }), 1000));
-``
-    return res.ok ? "success" : "error";
-
-    }, "idle");
+		const res: IRes = await new Promise((resolve) =>
+			setTimeout(() => resolve({ ok: true }), 1000)
+		);
+		return res.ok ? 'success' : 'error';
+	}, 'idle');
 
 	useEffect(() => {
-		if (status ===  "success") {
+		if (status === 'success') {
 			toast.success('Вы успешно обновили свои данные!');
 		}
-		if (status ===  "error") {
+		if (status === 'error') {
 			toast.error('При обновлении данных произошла ошибка!');
 		}
-	}, [status])
-
+	}, [status]);
 
 	return (
 		<>
@@ -104,4 +101,3 @@ export const ProfilePage = WithProtection(() => {
 		</>
 	);
 });
-

@@ -1,4 +1,4 @@
-import { useCallback, useOptimistic, startTransition } from 'react';
+import { useCallback, useOptimistic } from 'react';
 import {
 	IErrorResponse,
 	useDeleteLikeProductMutation,
@@ -11,11 +11,12 @@ import { toast } from 'react-toastify';
 export const useProductLike = (product?: Product) => {
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 	const user = useAppSelector(userSelectors.getUser);
-	const isLikedOnServer = product?.likes.some((l) => l.userId === user?.id) || false;
+	const isLikedOnServer =
+		product?.likes.some((l) => l.userId === user?.id) || false;
 	const [optimisticLike, addOptimistic] = useOptimistic(
-    isLikedOnServer,
-    (_, next: boolean) => next
-  	);
+		isLikedOnServer,
+		(_, next: boolean) => next
+	);
 
 	const [setLike] = useSetLikeProductMutation();
 	const [deleteLike] = useDeleteLikeProductMutation();
@@ -38,8 +39,14 @@ export const useProductLike = (product?: Product) => {
 			const error = response.error as IErrorResponse;
 			toast.error(error.data.message);
 		}
-
-	}, [accessToken, optimisticLike, product?.id, setLike, deleteLike]);
+	}, [
+		accessToken,
+		addOptimistic,
+		optimisticLike,
+		product?.id,
+		setLike,
+		deleteLike,
+	]);
 
 	return { onToggleLike, isLike: optimisticLike };
 };
