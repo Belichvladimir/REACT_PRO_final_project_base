@@ -2,13 +2,13 @@ import classNames from 'classnames';
 import s from './ReviewList.module.css';
 import { Rating } from '../../../shared/ui/Rating';
 import { ReviewForm } from './ReviewForm/ReviewForm';
-import { memo, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 
 type ReviewListProps = {
 	product: Product;
 };
 
-export const ReviewList = memo(({ product }: ReviewListProps) => {
+const ReviewListComponent = memo(({ product }: ReviewListProps) => {
 	const formattedReviews = useMemo(() => {
 		return product.reviews.map((review) => (
 			<div className={s['review']} key={review.id}>
@@ -33,3 +33,7 @@ export const ReviewList = memo(({ product }: ReviewListProps) => {
 		</div>
 	);
 });
+
+ReviewListComponent.displayName = 'ReviewList';
+
+export const ReviewList: FC<ReviewListProps> = ReviewListComponent;

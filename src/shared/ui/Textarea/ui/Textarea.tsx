@@ -15,11 +15,7 @@ const TextareaComponent = memo(
 
 			const computedClassName = useMemo(
 				() =>
-					classNames(
-						s['textarea'],
-						error && s['textarea_error'],
-						className
-					),
+					classNames(s['textarea'], error && s['textarea_error'], className),
 				[error, className]
 			);
 

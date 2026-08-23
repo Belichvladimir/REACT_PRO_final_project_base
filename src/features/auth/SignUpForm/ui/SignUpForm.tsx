@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Avatar, Box, Container, Link, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -17,6 +17,12 @@ export const SignUpForm: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const [signUpRequestFn] = useSignUpMutation();
+	const emailInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		emailInputRef.current?.focus();
+	}, []);
+
 	const {
 		control,
 		handleSubmit,
@@ -77,6 +83,7 @@ export const SignUpForm: FC = () => {
 						render={({ field }) => (
 							<Input
 								{...field}
+								ref={emailInputRef}
 								label='Email Address'
 								type='email'
 								fullWidth

@@ -5,7 +5,7 @@ import { CartItem } from '../../CartItem';
 import s from './CartList.module.css';
 import classNames from 'classnames';
 
-export const CartList = memo(() => {
+const CartListComponent = memo(() => {
 	const products = useAppSelector(cartSelectors.getCartProducts);
 
 	return (
@@ -16,3 +16,7 @@ export const CartList = memo(() => {
 		</div>
 	);
 });
+
+CartListComponent.displayName = 'CartList';
+
+export const CartList = CartListComponent;

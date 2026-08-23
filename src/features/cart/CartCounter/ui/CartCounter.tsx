@@ -8,7 +8,7 @@ type TCartCounter = {
 	productId: string;
 };
 
-export const CartCounter = memo(({ productId }: TCartCounter) => {
+const CartCounterComponent = memo(({ productId }: TCartCounter) => {
 	const { count, stock, handleSetCount, handleIncrement, handleDecrement } =
 		useCount(productId);
 
@@ -36,3 +36,7 @@ export const CartCounter = memo(({ productId }: TCartCounter) => {
 		</>
 	);
 });
+
+CartCounterComponent.displayName = 'CartCounter';
+
+export const CartCounter = CartCounterComponent;

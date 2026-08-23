@@ -5,7 +5,7 @@ import { Rating } from '../../../../shared/ui/Rating';
 import { Textarea } from '../../../../shared/ui/Textarea';
 import { Button } from '../../../../shared/ui/Button';
 
-export const ReviewForm = memo(() => {
+const ReviewFormComponent = memo(() => {
 	const [reviewText, setReviewText] = useState('');
 	const [rating, setRating] = useState(0);
 
@@ -37,3 +37,7 @@ export const ReviewForm = memo(() => {
 		</form>
 	);
 });
+
+ReviewFormComponent.displayName = 'ReviewForm';
+
+export const ReviewForm = ReviewFormComponent;

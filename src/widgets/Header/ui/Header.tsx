@@ -10,14 +10,15 @@ import { cartSelectors } from '../../../shared/store/slices/cart';
 import { Search } from '../../../features/search/ui/Search';
 import { memo, useMemo } from 'react';
 
-export const Header = memo(() => {
+const HeaderComponent = memo(() => {
 	const { products } = useProducts();
 	const user = useAppSelector(userSelectors.getUser);
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
-	const likeCount = useMemo(() => products.filter((product) =>
-		isLiked(product.likes, user?.id)
-	).length, [products, user?.id]);
+	const likeCount = useMemo(
+		() => products.filter((product) => isLiked(product.likes, user?.id)).length,
+		[products, user?.id]
+	);
 
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 
@@ -82,3 +83,7 @@ export const Header = memo(() => {
 		</header>
 	);
 });
+
+HeaderComponent.displayName = 'Header';
+
+export const Header = HeaderComponent;

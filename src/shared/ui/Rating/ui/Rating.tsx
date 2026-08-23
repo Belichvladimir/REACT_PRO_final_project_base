@@ -7,17 +7,23 @@ type TRating = {
 	onChange?: (rating: number) => void;
 };
 
-export const Rating = memo(({ rating = 0, isEdit = false, onChange }: TRating) => {
-	return (
-		<div>
-			{[...Array(5)].map((_e, i) => (
-				<span key={i} style={{ cursor: isEdit ? 'pointer' : 'default' }}>
-					<Star
-						onClick={() => onChange?.(i)}
-						fill={i <= rating ? 'gold' : 'gray'}
-					/>
-				</span>
-			))}
-		</div>
-	);
-});
+const RatingComponent = memo(
+	({ rating = 0, isEdit = false, onChange }: TRating) => {
+		return (
+			<div>
+				{[...Array(5)].map((_e, i) => (
+					<span key={i} style={{ cursor: isEdit ? 'pointer' : 'default' }}>
+						<Star
+							onClick={() => onChange?.(i)}
+							fill={i <= rating ? 'gold' : 'gray'}
+						/>
+					</span>
+				))}
+			</div>
+		);
+	}
+);
+
+RatingComponent.displayName = 'Rating';
+
+export const Rating = RatingComponent;

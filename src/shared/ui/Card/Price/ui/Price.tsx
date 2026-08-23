@@ -7,7 +7,7 @@ type TPriceProps = {
 	discountPrice: number;
 };
 
-export const Price = memo(({ price, discountPrice }: TPriceProps) => {
+const PriceComponent = memo(({ price, discountPrice }: TPriceProps) => {
 	return (
 		<div className={classNames(s['price-small'], s['price-wrap'])}>
 			<span className={classNames(s['price_old'], s['price_left'])}>
@@ -19,3 +19,7 @@ export const Price = memo(({ price, discountPrice }: TPriceProps) => {
 		</div>
 	);
 });
+
+PriceComponent.displayName = 'Price';
+
+export const Price = PriceComponent;

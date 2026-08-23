@@ -7,18 +7,21 @@ export interface LoaderProps {
 	fullScreen?: boolean;
 }
 
-export const Loader: FC<LoaderProps> = memo(({
-	size = 'md',
-	fullScreen = false,
-}) => {
-	return (
-		<div
-			className={classNames(
-				s['loader'],
-				s[`loader_${size}`],
-				fullScreen && s['loader_fullscreen']
-			)}>
-			<div className={s['loader__spinner']} />
-		</div>
-	);
-});
+const LoaderComponent = memo(
+	({ size = 'md', fullScreen = false }: LoaderProps) => {
+		return (
+			<div
+				className={classNames(
+					s['loader'],
+					s[`loader_${size}`],
+					fullScreen && s['loader_fullscreen']
+				)}>
+				<div className={s['loader__spinner']} />
+			</div>
+		);
+	}
+);
+
+LoaderComponent.displayName = 'Loader';
+
+export const Loader: FC<LoaderProps> = LoaderComponent;

@@ -7,7 +7,7 @@ export const NotFoundPage = () => {
 		<div className={s.NotFoundPage}>
 			<h1>Страница не найдена</h1>
 			<Link to='/'>
-				<Button variant="primary">Перейти на главную</Button>
+				<Button variant='primary'>Перейти на главную</Button>
 			</Link>
 		</div>
 	);

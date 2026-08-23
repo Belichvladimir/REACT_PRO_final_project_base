@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { Avatar, Box, Container, Link, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -18,6 +18,13 @@ export const SignInForm: FC = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [signInRequestFn] = useSignInMutation();
+
+	const emailInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		emailInputRef.current?.focus();
+	}, []);
+
 	const {
 		control,
 		handleSubmit,
@@ -82,6 +89,7 @@ export const SignInForm: FC = () => {
 						render={({ field }) => (
 							<Input
 								{...field}
+								ref={emailInputRef}
 								label='Email Address'
 								type='email'
 								fullWidth

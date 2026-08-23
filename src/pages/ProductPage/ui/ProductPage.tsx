@@ -23,11 +23,11 @@ export const ProductPage = WithProtection(() => {
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
 	const { data: product } = useGetProductQuery({ id: productId });
-	
+
 	if (!product) {
 		return <></>;
 	}
-	const {isLike, onToggleLike} = useProductLike(product);
+	const { isLike, onToggleLike } = useProductLike(product);
 	const { id, name, images, description, price, discount } = product;
 
 	const isProductInCart = !!cartProducts.find((p) => p.id === id);

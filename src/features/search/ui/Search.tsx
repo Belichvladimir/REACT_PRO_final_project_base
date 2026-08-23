@@ -3,12 +3,13 @@ import { useProductsSearchForm } from '../Search/hooks/usePostsSearchForm';
 import s from './Search.module.css';
 import { memo, useCallback } from 'react';
 
-export const Search = memo(() => {
+const SearchComponent = memo(({ onClear }: { onClear?: () => void }) => {
 	const { searchValue, setSearchValue } = useProductsSearchForm();
 
 	const handleClearSearchText = useCallback(() => {
 		setSearchValue('');
-	}, []);
+		onClear?.();
+	}, [setSearchValue, onClear]);
 
 	return (
 		<form className={s['search']}>
@@ -41,3 +42,7 @@ export const Search = memo(() => {
 		</form>
 	);
 });
+
+SearchComponent.displayName = 'Search';
+
+export const Search = SearchComponent;

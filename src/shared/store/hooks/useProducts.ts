@@ -23,14 +23,14 @@ export const useProducts = () => {
 
 	const user = useAppSelector(userSelectors.getUser);
 
-	let products = useMemo(() => {
+	const products = useMemo(() => {
 		let prods = data?.products || [];
 		if (isFavoritesPage) {
 			prods = prods.filter((product) => isLiked(product.likes, user?.id));
 		}
 		return prods;
-	}, [data, isFavoritesPage]);
-
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, isFavoritesPage, user?.id]);
 
 	const productsCount = data?.length || 0;
 

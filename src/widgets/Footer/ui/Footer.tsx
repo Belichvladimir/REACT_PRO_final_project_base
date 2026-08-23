@@ -8,7 +8,7 @@ import s from './Footer.module.css';
 import { Logo } from '../../../shared/ui/Logo';
 import { memo } from 'react';
 
-export const Footer = memo(() => {
+const FooterComponent = memo(() => {
 	return (
 		<footer className={s.footer}>
 			<div className='container'>
@@ -98,3 +98,7 @@ export const Footer = memo(() => {
 		</footer>
 	);
 });
+
+FooterComponent.displayName = 'Footer';
+
+export const Footer = FooterComponent;

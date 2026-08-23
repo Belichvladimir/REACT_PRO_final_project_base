@@ -10,29 +10,35 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	sx?: CSSProperties;
 }
 
-export const Button: FC<ButtonProps> = memo(({
-	children,
-	variant = 'primary',
-	fullWidth,
-	sx,
-	className,
-	disabled,
-	type = 'button',
-	...rest
-}) => {
-	return (
-		<button
-			className={classNames(
-				s['button'],
-				s[`button_${variant}`],
-				fullWidth && s['button_fullwidth'],
-				className
-			)}
-			disabled={disabled}
-			type={type}
-			style={sx}
-			{...rest}>
-			{children}
-		</button>
-	);
-});
+const ButtonComponent = memo(
+	({
+		children,
+		variant = 'primary',
+		fullWidth,
+		sx,
+		className,
+		disabled,
+		type = 'button',
+		...rest
+	}: ButtonProps) => {
+		return (
+			<button
+				className={classNames(
+					s['button'],
+					s[`button_${variant}`],
+					fullWidth && s['button_fullwidth'],
+					className
+				)}
+				disabled={disabled}
+				type={type}
+				style={sx}
+				{...rest}>
+				{children}
+			</button>
+		);
+	}
+);
+
+ButtonComponent.displayName = 'Button';
+
+export const Button: FC<ButtonProps> = ButtonComponent;

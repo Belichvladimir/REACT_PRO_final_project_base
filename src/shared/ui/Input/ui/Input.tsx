@@ -7,11 +7,15 @@ export interface InputProps
 	label?: string;
 	error?: string;
 	fullWidth?: boolean;
+	ref?: React.Ref<HTMLInputElement>;
 }
 
 const InputComponent = memo(
 	forwardRef<HTMLInputElement, InputProps>(
-		({ label, error, fullWidth, className, type = 'text', id, ...rest }, ref) => {
+		(
+			{ label, error, fullWidth, className, type = 'text', id, ...rest },
+			ref
+		) => {
 			const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
 			const computedClassName = useMemo(

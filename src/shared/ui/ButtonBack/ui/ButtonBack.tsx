@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as BackSvg } from './../../../assets/icons/back.svg';
 import { memo } from 'react';
 
-export const ButtonBack = memo(() => {
+const ButtonBackComponent = memo(() => {
 	const navigate = useNavigate();
 	return (
 		<button onClick={() => navigate(-1)}>
@@ -10,3 +10,7 @@ export const ButtonBack = memo(() => {
 		</button>
 	);
 });
+
+ButtonBackComponent.displayName = 'ButtonBack';
+
+export const ButtonBack = ButtonBackComponent;

@@ -1,19 +1,23 @@
-import { useCallback } from "react";
-import { IErrorResponse, useDeleteLikeProductMutation, useSetLikeProductMutation } from "../store/api/productsApi";
-import { userSelectors } from "../store/slices/user";
-import { useAppSelector } from "../store/utils";
-import { toast } from "react-toastify";
+import { useCallback } from 'react';
+import {
+	IErrorResponse,
+	useDeleteLikeProductMutation,
+	useSetLikeProductMutation,
+} from '../store/api/productsApi';
+import { userSelectors } from '../store/slices/user';
+import { useAppSelector } from '../store/utils';
+import { toast } from 'react-toastify';
 
 export const useProductLike = (product: Product) => {
-  const accessToken = useAppSelector(userSelectors.getAccessToken);
-  const user = useAppSelector(userSelectors.getUser);
-  
-  const [setLike] = useSetLikeProductMutation();
-  const [deleteLike] = useDeleteLikeProductMutation();
+	const accessToken = useAppSelector(userSelectors.getAccessToken);
+	const user = useAppSelector(userSelectors.getUser);
 
-const isLike = product?.likes.some((l) => l.userId === user?.id);
+	const [setLike] = useSetLikeProductMutation();
+	const [deleteLike] = useDeleteLikeProductMutation();
 
-  const onToggleLike = useCallback(async () => {
+	const isLike = product?.likes.some((l) => l.userId === user?.id);
+
+	const onToggleLike = useCallback(async () => {
 		if (!accessToken) {
 			toast.warning('Вы не авторизованы');
 			return;
@@ -31,5 +35,5 @@ const isLike = product?.likes.some((l) => l.userId === user?.id);
 		}
 	}, [accessToken, isLike, product.id, setLike, deleteLike]);
 
-  return {onToggleLike, isLike};
+	return { onToggleLike, isLike };
 };
