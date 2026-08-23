@@ -3,13 +3,19 @@ import classNames from 'classnames';
 import { useCount } from '../hooks/useCount';
 import { useAddToCart } from '../../../../shared/hooks/useAddToCart';
 import { Input } from '../../../../shared/ui';
+import { memo, useCallback } from 'react';
 
 type ProductCartCounterProps = {
 	product: Product;
 };
-export const ProductCartCounter = ({ product }: ProductCartCounterProps) => {
+
+export const ProductCartCounter = memo(({ product }: ProductCartCounterProps) => {
 	const { count, handleCount, handleCountMinus, handleCountPlus } = useCount();
 	const { addProductToCart } = useAddToCart();
+
+	const handleAddToCart = useCallback(() => {
+		addProductToCart({ ...product, count });
+	}, [addProductToCart, product, count]);
 
 	return (
 		<div className={classNames('product__btn-wrap')}>
@@ -28,10 +34,10 @@ export const ProductCartCounter = ({ product }: ProductCartCounterProps) => {
 				</button>
 			</div>
 			<button
-				onClick={() => addProductToCart({ ...product, count })}
+				onClick={handleAddToCart}
 				className={classNames(s['button'], s['button_type_primary'])}>
 				В корзину
 			</button>
 		</div>
 	);
-};
+});

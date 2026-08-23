@@ -8,6 +8,7 @@ import {
 	productsSelectors,
 } from '../../../shared/store/slices/products';
 import { useGetProductsQuery } from '../../../shared/store/api/productsApi';
+import { useCallback } from 'react';
 
 const CardListWithQuery = WithQuery(CardList);
 
@@ -26,11 +27,11 @@ export const HomePage = WithProtection(() => {
 	const productsCount = data?.length ?? 0;
 	const isEndOfList = products.length >= productsCount;
 
-	const handleLoadMore = () => {
+	const handleLoadMore = useCallback(() => {
 		if (!isEndOfList && !isFetching) {
 			dispatch(productsActions.setPage(page + 1));
 		}
-	};
+	}, [isEndOfList, isFetching, dispatch, page]);
 
 	return (
 		<>

@@ -1,21 +1,21 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import s from './ReviewForm.module.css';
 import { Rating } from '../../../../shared/ui/Rating';
 import { Textarea } from '../../../../shared/ui/Textarea';
 import { Button } from '../../../../shared/ui/Button';
 
-export const ReviewForm = () => {
+export const ReviewForm = memo(() => {
 	const [reviewText, setReviewText] = useState('');
 	const [rating, setRating] = useState(0);
 
-	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
 		setReviewText(e.target.value);
-	};
+	}, []);
 
-	const handleClick = () => {
+	const handleClick = useCallback(() => {
 		console.log('Отправка: ', { reviewText, rating });
-	};
+	}, [reviewText, rating]);
 
 	return (
 		<form className={s['form']}>
@@ -36,4 +36,4 @@ export const ReviewForm = () => {
 			</Button>
 		</form>
 	);
-};
+});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useAddToCart } from '../../../shared/hooks/useAddToCart';
 import { cartSelectors } from '../../../shared/store/slices/cart';
 import { useAppSelector } from '../../../shared/store/utils';
@@ -9,11 +9,19 @@ type CardListProps = {
 	title: string;
 	products: Product[];
 };
-export const CardList = ({ title, products }: CardListProps) => {
+export const CardList = React.memo(({ title, products }: CardListProps) => {
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 	const { addProductToCart } = useAddToCart();
 
-	const isProductInCart = (id: string) => cartProducts.some((p) => p.id === id);
+	const cartProductIds = useMemo(() => {
+		const ids = new Set<string>();
+		cartProducts.forEach(p => ids.add(p.id));
+		return ids;
+	}, [cartProducts]);
+
+	const isProductInCart = useCallback((id: string) => {
+		return cartProductIds.has(id);
+	}, [cartProductIds]);
 
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
@@ -36,4 +44,4 @@ export const CardList = ({ title, products }: CardListProps) => {
 			</div>
 		</div>
 	);
-};
+}, (prev, next) => prev.products === next.products && prev.title === next.title);

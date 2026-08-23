@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import s from './Loader.module.css';
 import classNames from 'classnames';
 
@@ -7,7 +7,7 @@ export interface LoaderProps {
 	fullScreen?: boolean;
 }
 
-export const Loader: FC<LoaderProps> = ({
+export const Loader: FC<LoaderProps> = memo(({
 	size = 'md',
 	fullScreen = false,
 }) => {
@@ -21,4 +21,4 @@ export const Loader: FC<LoaderProps> = ({
 			<div className={s['loader__spinner']} />
 		</div>
 	);
-};
+});

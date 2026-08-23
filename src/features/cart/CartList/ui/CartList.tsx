@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { cartSelectors } from '../../../../shared/store/slices/cart';
 import { useAppSelector } from '../../../../shared/store/utils';
 import { CartItem } from '../../CartItem';
 import s from './CartList.module.css';
 import classNames from 'classnames';
 
-export const CartList = () => {
+export const CartList = memo(() => {
 	const products = useAppSelector(cartSelectors.getCartProducts);
 
 	return (
@@ -14,4 +15,4 @@ export const CartList = () => {
 			))}
 		</div>
 	);
-};
+});

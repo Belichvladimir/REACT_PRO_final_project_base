@@ -13,6 +13,7 @@ import { useAppSelector } from '../../../shared/store/utils';
 import { cartSelectors } from '../../../shared/store/slices/cart';
 import { CartCounter } from '../../../features/cart/CartCounter';
 import { ProductCartCounter } from '../../../features/cart/ProductCartCounter';
+import { useProductLike } from '../../../shared/hooks/useProductLike';
 
 export const ProductPage = WithProtection(() => {
 	const location = useLocation();
@@ -22,11 +23,11 @@ export const ProductPage = WithProtection(() => {
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
 	const { data: product } = useGetProductQuery({ id: productId });
-
+	
 	if (!product) {
 		return <></>;
 	}
-
+	const {isLike, onToggleLike} = useProductLike(product);
 	const { id, name, images, description, price, discount } = product;
 
 	const isProductInCart = !!cartProducts.find((p) => p.id === id);
@@ -59,7 +60,7 @@ export const ProductPage = WithProtection(() => {
 						<ProductCartCounter product={product} />
 					)}
 
-					<LikeButton product={product} />
+					<LikeButton isLike={isLike} toggleLike={onToggleLike} />
 					<div className={classNames(s['product__delivery'])}>
 						<img src={truckSVG} alt='truck' />
 						<div className={classNames(s['product__right'])}>

@@ -6,11 +6,13 @@ import { cartActions } from '../../../../shared/store/slices/cart';
 import { Button } from '../../../../shared/ui';
 import { CartCounter } from '../../CartCounter';
 import { useAppDispatch } from '../../../../shared/store/utils';
+import { memo } from 'react';
 
 type CartItemProps = {
 	product: CartProduct;
 };
-export const CartItem = ({ product }: CartItemProps) => {
+
+export const CartItem = memo((({ product }: CartItemProps) => {
 	const dispatch = useAppDispatch();
 	const { id, name, images, price, discount } = product;
 
@@ -60,4 +62,6 @@ export const CartItem = ({ product }: CartItemProps) => {
 			</div>
 		</div>
 	);
-};
+}), (prev, next) =>
+    prev.product.id === next.product.id
+);

@@ -5,14 +5,18 @@ import { Link } from 'react-router-dom';
 import { LikeButton } from '../../LikeButton';
 import { Button } from '../../Button';
 import { CartCounter } from '../../../../features/cart/CartCounter';
+import { memo, useCallback } from 'react';
+import { useProductLike } from '../../../hooks/useProductLike';
 
 type CardProps = {
 	product: Product;
 	isProductInCart: boolean;
 	onAddToCart: (cartProduct: CartProduct) => void;
 };
-export const Card = ({ product, isProductInCart, onAddToCart }: CardProps) => {
+export const Card = memo(({ product, isProductInCart, onAddToCart }: CardProps) => {
 	const { discount, price, name, tags, id, images } = product;
+	const {isLike, onToggleLike} = useProductLike(product);
+	const handleClick = useCallback(() => onAddToCart({ ...product, count: 1 }), [product, onAddToCart])
 
 	return (
 		<article className={s['card']}>
@@ -34,7 +38,7 @@ export const Card = ({ product, isProductInCart, onAddToCart }: CardProps) => {
 					s['card__sticky'],
 					s['card__sticky_type_top-right']
 				)}>
-				<LikeButton product={product} />
+				<LikeButton isLike={isLike} toggleLike={onToggleLike} />
 			</div>
 			<Link className={s['card__link']} to={`/products/${id}`}>
 				<img
@@ -52,7 +56,7 @@ export const Card = ({ product, isProductInCart, onAddToCart }: CardProps) => {
 				<CartCounter productId={id} />
 			) : (
 				<Button
-					onClick={() => onAddToCart({ ...product, count: 1 })}
+					onClick={handleClick}
 					disabled={isProductInCart}
 					variant='primary'
 					className={classNames(
@@ -65,4 +69,9 @@ export const Card = ({ product, isProductInCart, onAddToCart }: CardProps) => {
 			)}
 		</article>
 	);
-};
+}, (prevProps, nextProps) => {
+	return (
+		prevProps.product === nextProps.product &&
+		prevProps.isProductInCart === nextProps.isProductInCart
+	);
+});

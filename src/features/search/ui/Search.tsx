@@ -1,8 +1,9 @@
 import { Input } from '../../../shared/ui';
 import { useProductsSearchForm } from '../Search/hooks/usePostsSearchForm';
 import s from './Search.module.css';
+import { memo } from 'react';
 
-export const Search = () => {
+export const Search = memo(() => {
 	const { searchValue, setSearchValue } = useProductsSearchForm();
 
 	const handleClearSearchText = () => {
@@ -39,4 +40,4 @@ export const Search = () => {
 			)}
 		</form>
 	);
-};
+});

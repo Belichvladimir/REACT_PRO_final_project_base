@@ -1,4 +1,4 @@
-import { FC, ButtonHTMLAttributes, CSSProperties } from 'react';
+import { FC, ButtonHTMLAttributes, CSSProperties, memo } from 'react';
 import s from './Button.module.css';
 import classNames from 'classnames';
 
@@ -10,7 +10,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	sx?: CSSProperties;
 }
 
-export const Button: FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = memo(({
 	children,
 	variant = 'primary',
 	fullWidth,
@@ -35,4 +35,4 @@ export const Button: FC<ButtonProps> = ({
 			{children}
 		</button>
 	);
-};
+});

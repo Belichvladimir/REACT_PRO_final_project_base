@@ -1,5 +1,5 @@
 import { Alert, CircularProgress, Stack } from '@mui/material';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
 type LoadMoreProps = {
 	isFetching: boolean;
@@ -7,7 +7,7 @@ type LoadMoreProps = {
 	onLoadMore: () => void;
 };
 
-export const LoadMore = ({
+export const LoadMore = memo(({
 	isFetching,
 	isEndOfList,
 	onLoadMore,
@@ -41,4 +41,4 @@ export const LoadMore = ({
 			{isEndOfList && <Alert severity='success'>End of list!</Alert>}
 		</Stack>
 	);
-};
+});

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { cartSelectors } from '../../../../shared/store/slices/cart';
 import { useAppSelector } from '../../../../shared/store/utils';
 import s from './CartAmount.module.css';
@@ -5,11 +6,15 @@ import classNames from 'classnames';
 
 export const CartAmount = () => {
 	const products = useAppSelector(cartSelectors.getCartProducts);
-	const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
-	const allDiscount = products.reduce(
-		(acc, p) => p.discount * p.count + acc,
-		0
-	);
+
+	const { allPrice, allDiscount, totalPrice } = useMemo(() => {
+		const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
+		const allDiscount = products.reduce(
+			(acc, p) => p.discount * p.count + acc,
+			0
+		);
+		return { allPrice, allDiscount, totalPrice: allPrice - allDiscount };
+	}, [products]);
 
 	const handleSubmitCart = () => {
 		const order = products.map((p) => ({ id: p.id, count: p.count }));
@@ -46,7 +51,7 @@ export const CartAmount = () => {
 					Общая стоимость
 				</h2>
 				<span className={classNames(s['cart-amount__total-cost-value'])}>
-					{`${allPrice - allDiscount} ₽`}
+					{`${totalPrice} ₽`}
 				</span>
 			</div>
 			<button
