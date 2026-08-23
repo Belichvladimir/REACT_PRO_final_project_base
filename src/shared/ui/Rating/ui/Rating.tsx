@@ -1,4 +1,4 @@
-import { ReactComponent as Star } from '../../../assets/icons/star.svg';
+import Star from '../../../assets/icons/star.svg?react';
 import { memo } from 'react';
 
 type TRating = {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as BackSvg } from './../../../assets/icons/back.svg';
+import BackSvg from './../../../assets/icons/back.svg?react';
 import { memo } from 'react';
 
 const ButtonBackComponent = memo(() => {

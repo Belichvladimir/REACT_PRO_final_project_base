@@ -1,5 +1,5 @@
 import s from './LikeButton.module.css';
-import { ReactComponent as LikeSvg } from './../../../assets/icons/like.svg';
+import LikeSvg from './../../../assets/icons/like.svg?react';
 import classNames from 'classnames';
 import { memo } from 'react';
 
