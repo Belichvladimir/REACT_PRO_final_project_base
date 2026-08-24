@@ -6,8 +6,9 @@ import Vk from '../../../shared/assets/images/vk.svg';
 import Whatsapp from '../../../shared/assets/images/whatsapp.svg';
 import s from './Footer.module.css';
 import { Logo } from '../../../shared/ui/Logo';
+import { memo } from 'react';
 
-export const Footer = () => {
+const FooterComponent = memo(() => {
 	return (
 		<footer className={s.footer}>
 			<div className='container'>
@@ -96,4 +97,8 @@ export const Footer = () => {
 			</div>
 		</footer>
 	);
-};
+});
+
+FooterComponent.displayName = 'Footer';
+
+export const Footer = FooterComponent;

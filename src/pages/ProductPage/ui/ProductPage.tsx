@@ -9,24 +9,23 @@ import { LikeButton } from '../../../shared/ui/LikeButton';
 import { ReviewList } from '../../../widgets/ReviewList/ui/ReviewList';
 import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { useGetProductQuery } from '../../../shared/store/api/productsApi';
-import { ProductCartCounter } from '../../../shared/ui/ProductCartCounter/ui/ProductCartCounter';
 import { useAppSelector } from '../../../shared/store/utils';
 import { cartSelectors } from '../../../shared/store/slices/cart';
-import { CartCounter } from '../../../shared/ui/CartCounter';
+import { CartCounter } from '../../../features/cart/CartCounter';
+import { ProductCartCounter } from '../../../features/cart/ProductCartCounter';
+import { useProductLike } from '../../../shared/hooks/useProductLike';
 
 export const ProductPage = WithProtection(() => {
 	const location = useLocation();
 	const { pathname } = location;
 	const productId = pathname.split('/').at(-1) || '';
-
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
-
 	const { data: product } = useGetProductQuery({ id: productId });
+	const { isLike, onToggleLike } = useProductLike(product);
 
 	if (!product) {
 		return <></>;
 	}
-
 	const { id, name, images, description, price, discount } = product;
 
 	const isProductInCart = !!cartProducts.find((p) => p.id === id);
@@ -59,7 +58,7 @@ export const ProductPage = WithProtection(() => {
 						<ProductCartCounter product={product} />
 					)}
 
-					<LikeButton product={product} />
+					<LikeButton isLike={isLike} toggleLike={onToggleLike} />
 					<div className={classNames(s['product__delivery'])}>
 						<img src={truckSVG} alt='truck' />
 						<div className={classNames(s['product__right'])}>

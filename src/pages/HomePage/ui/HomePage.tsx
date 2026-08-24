@@ -2,12 +2,36 @@ import { WithProtection } from '../../../shared/store/HOCs/WithProtection';
 import { WithQuery } from '../../../shared/store/HOCs/WithQuery';
 import { LoadMore } from '../../../shared/ui/LoadMore';
 import { CardList } from '../../../widgets/CardList';
-import { useProducts } from '../../../shared/store/hooks/useProducts';
+import { useAppDispatch, useAppSelector } from '../../../shared/store/utils';
+import {
+	productsActions,
+	productsSelectors,
+} from '../../../shared/store/slices/products';
+import { useGetProductsQuery } from '../../../shared/store/api/productsApi';
+import { useCallback } from 'react';
 
 const CardListWithQuery = WithQuery(CardList);
 
 export const HomePage = WithProtection(() => {
-	const { products, isLoading, isError, error } = useProducts();
+	const dispatch = useAppDispatch();
+	const page = useAppSelector(productsSelectors.getPage);
+
+	const { data, isLoading, isError, error, isFetching } = useGetProductsQuery({
+		searchText: '',
+		sort: 'newest',
+		page,
+		perPage: 6,
+	});
+
+	const products = data?.products ?? [];
+	const productsCount = data?.length ?? 0;
+	const isEndOfList = products.length >= productsCount;
+
+	const handleLoadMore = useCallback(() => {
+		if (!isEndOfList && !isFetching) {
+			dispatch(productsActions.setPage(page + 1));
+		}
+	}, [isEndOfList, isFetching, dispatch, page]);
 
 	return (
 		<>
@@ -18,7 +42,11 @@ export const HomePage = WithProtection(() => {
 				products={products}
 				error={error}
 			/>
-			<LoadMore />
+			<LoadMore
+				isFetching={isFetching}
+				isEndOfList={isEndOfList}
+				onLoadMore={handleLoadMore}
+			/>
 		</>
 	);
 });

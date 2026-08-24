@@ -1,0 +1,44 @@
+import { FC, ButtonHTMLAttributes, CSSProperties, memo } from 'react';
+import s from './Button.module.css';
+import classNames from 'classnames';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text';
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?: ButtonVariant;
+	fullWidth?: boolean;
+	sx?: CSSProperties;
+}
+
+const ButtonComponent = memo(
+	({
+		children,
+		variant = 'primary',
+		fullWidth,
+		sx,
+		className,
+		disabled,
+		type = 'button',
+		...rest
+	}: ButtonProps) => {
+		return (
+			<button
+				className={classNames(
+					s['button'],
+					s[`button_${variant}`],
+					fullWidth && s['button_fullwidth'],
+					className
+				)}
+				disabled={disabled}
+				type={type}
+				style={sx}
+				{...rest}>
+				{children}
+			</button>
+		);
+	}
+);
+
+ButtonComponent.displayName = 'Button';
+
+export const Button: FC<ButtonProps> = ButtonComponent;

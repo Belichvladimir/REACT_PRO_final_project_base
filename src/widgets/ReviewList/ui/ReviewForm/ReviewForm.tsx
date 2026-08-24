@@ -1,36 +1,43 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import s from './ReviewForm.module.css';
 import { Rating } from '../../../../shared/ui/Rating';
+import { Textarea } from '../../../../shared/ui/Textarea';
+import { Button } from '../../../../shared/ui/Button';
 
-export const ReviewForm = () => {
+const ReviewFormComponent = memo(() => {
 	const [reviewText, setReviewText] = useState('');
 	const [rating, setRating] = useState(0);
 
-	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
 		setReviewText(e.target.value);
-	};
+	}, []);
 
-	const handleClick = () => {
+	const handleClick = useCallback(() => {
 		console.log('Отправка: ', { reviewText, rating });
-	};
+	}, [reviewText, rating]);
 
 	return (
 		<form className={s['form']}>
 			<Rating isEdit rating={rating} onChange={setRating} />
-			<textarea
-				className={classNames(s['input'], s['textarea'])}
+			<Textarea
 				name='text'
 				id='text'
 				placeholder='Напишите текст отзыва'
 				value={reviewText}
-				onChange={handleChange}></textarea>
-			<button
+				onChange={handleChange}
+			/>
+			<Button
 				type='submit'
+				variant='primary'
 				className={classNames(s['form__btn'], s['pramary'])}
 				onClick={handleClick}>
 				Отправить отзыв
-			</button>
+			</Button>
 		</form>
 	);
-};
+});
+
+ReviewFormComponent.displayName = 'ReviewForm';
+
+export const ReviewForm = ReviewFormComponent;

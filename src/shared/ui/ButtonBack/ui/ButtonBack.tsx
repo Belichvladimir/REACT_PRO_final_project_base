@@ -1,11 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as BackSvg } from './../../../assets/icons/back.svg';
+import BackSvg from './../../../assets/icons/back.svg?react';
+import { memo } from 'react';
 
-export const ButtonBack = () => {
+const ButtonBackComponent = memo(() => {
 	const navigate = useNavigate();
 	return (
 		<button onClick={() => navigate(-1)}>
 			<BackSvg />
 		</button>
 	);
-};
+});
+
+ButtonBackComponent.displayName = 'ButtonBack';
+
+export const ButtonBack = ButtonBackComponent;
